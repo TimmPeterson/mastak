@@ -1,0 +1,97 @@
+body {
+  /* margin: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center; */
+  margin: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column; /* Изменяем направление на вертикальное */
+  align-items: center; /* Центрируем элементы по горизонтали */
+  justify-content: center; /* Центрируем по вертикали */
+  height: 100vh;
+}
+
+.upperbar {
+  width: 100%;
+  justify-content: left;
+  align-items: flex-start;
+  flex-direction: row;
+  margin: 0;
+}
+
+#quit {
+  height: 4vh;
+  width: 10vh;
+  background-color: red;
+  border-radius: 5px;
+  margin-top: 4vh;
+  margin-bottom: auto;
+}
+
+#quit:hover {
+  background-color: #aa0000;
+}
+
+.container {
+  /* margin: 5vh; */
+  display: flex;
+  width: 100%;
+}
+
+.sidebar {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+#memberList,
+#actionList {
+  border: 1px solid #ccc;
+  border-radius: 0;
+  padding: 5px;
+  margin: 5px 0;
+  height: calc(33% - 10px);
+  overflow-y: auto;
+}
+
+h1 {
+  margin: 0;
+  margin-bottom: 20px;
+}
+
+canvas {
+  width: 80vh;
+  height: 80vh;
+  border: 1px solid #333;
+}
+
+button {
+  margin: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  height: calc(33vh - 10px);
+  width: 50%;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.buttondiv {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  padding: 10px;
+  box-sizing: border-box;
+}

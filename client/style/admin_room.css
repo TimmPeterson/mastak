@@ -1,0 +1,154 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Высота 100% от высоты окна */
+  margin: 0; /* Убираем отступы по умолчанию */
+  background-color: #f0f0f0;
+}
+
+.container {
+  width: 300px;
+  height: 300px;
+  align-self: center;
+  max-width: 600px;
+  margin: 0 auto;
+  background: white;
+  padding: 20px;
+  border-radius: 0px;
+  border: 1px solid #ccc;
+  text-align: center;
+  overflow-y: auto;
+}
+
+h1 {
+  text-align: center;
+}
+
+.members-list {
+  margin: 20px 0;
+}
+
+.member {
+  text-align: left;
+  padding: 10px;
+  background-color: #e0e0e0;
+  margin: 5px 0;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.member:hover {
+  background-color: #c5c5c5;
+}
+
+button {
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 16px;
+  margin: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.backdiv {
+  text-align: center;
+  align-self: center;
+}
+
+.close {
+  background-color: red;
+  color: white;
+}
+
+.close:hover {
+  background-color: #aa0000;
+  color: white;
+}
+
+.refresh {
+  background-color: #007bff;
+  color: white;
+}
+
+.refresh:hover {
+  background-color: #0056b3;
+  color: white;
+}
+
+.start {
+  background-color: #4caf50;
+  color: white;
+}
+
+.start:hover {
+  background-color: #4c7c50;
+  color: white;
+}
+/* body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+}
+
+.container {
+  text-align: center;
+}
+
+.participants {
+  width: 300px;
+  height: 300px;
+  border: 1px solid #ccc;
+  overflow-y: auto;
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #fff;
+}
+
+.participant {
+  padding: 5px;
+}
+
+.participant:last-child {
+  border-bottom: none;
+}
+
+.button {
+  border-radius: 4px;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.green {
+  border-radius: 4px;
+  background-color: #4caf50;
+  color: white;
+}
+
+.green:hover {
+  background-color: #4c7c50;
+}
+
+.red {
+  border-radius: 4px;
+  background-color: #f44336;
+  color: white;
+}
+
+.red:hover {
+  background-color: #b44336;
+}
+
+.refresh {
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+}
+
+.refresh:hover {
+  background-color: #0056b3;
+} */

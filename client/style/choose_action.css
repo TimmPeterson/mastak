@@ -1,0 +1,49 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+  margin: 0;
+}
+
+.container {
+  text-align: center;
+}
+
+button {
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 16px;
+  margin: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.create-button {
+  background-color: #00c000;
+  color: white;
+}
+
+.create-button:hover {
+  background-color: #008000;
+}
+
+.join-button {
+  background-color: #007bff; /* Можно выбрать любой цвет */
+  color: white;
+}
+
+.join-button:hover {
+  background-color: #0056b3;
+}
+
+.back-button {
+  background-color: red;
+  color: white;
+}
+
+.back-button:hover {
+  background-color: #aa0000;
+  color: white;
+}
