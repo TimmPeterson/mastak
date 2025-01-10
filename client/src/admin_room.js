@@ -1,4 +1,6 @@
-import { user, room } from "./def.js";
+import { map, user, room } from "./def.js";
+import { frame } from "./game/draw.js";
+import { eqto, point, field } from "./game/field.js";
 
 sessionStorage.setItem("isadmin", "true");
 document.getElementById("hRoomName").textContent =
@@ -49,6 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
   closeButton.addEventListener("click", closeRoom);
 
   // Функция-пустышка для нажатия на кнопку Start
+  let mapField = new field(map, 1024, []);
   function startGame() {
     console.log("Игра началась!");
     window.location.href = "game.html";
@@ -56,6 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
     sendMessage("gameStarted", {
       userName: sessionStorage.getItem("userName"),
       roomName: sessionStorage.getItem("roomName"),
+      map: mapField.walls,
     });
   }
 
@@ -149,4 +153,28 @@ document.addEventListener("DOMContentLoaded", function () {
   //window.addMember("Anaros");
   //window.addMember("TimPeterson");
   //for (let i = 0; i < 15; i++) window.addMember(`TimPeterson #${i + 1}`);
+
+  let mapFrame = new frame("mapCanvas");
+  let canvas = document.getElementById("mapCanvas");
+  mapField.draw(mapFrame);
+  canvas.addEventListener("click", (event) => {
+    const rect = canvas.getBoundingClientRect();
+    const mouseX =
+      ((event.clientX - rect.left) / (rect.right - rect.left)) * canvas.width;
+    const mouseY =
+      ((event.clientY - rect.top) / (rect.bottom - rect.top)) * canvas.height;
+    const p = {
+      x: Math.floor(mouseX / (mapField.boxsize + mapField.gapsize)),
+      y: Math.floor(mouseY / (mapField.boxsize + mapField.gapsize)),
+    };
+    if (p.x == 0 || p.x == 15 || p.y == 0 || p.y == 15) return;
+    const PY = [point(1, 1), point(13, 1), point(1, 13), point(13, 13)];
+    const DX = [point(0, 0), point(1, 0), point(0, 1), point(1, 1)];
+    for (let y = 0; y < 4; y++)
+      for (let x = 0; x < 4; x++)
+        if (eqto(p, point(PY[y].x + DX[x].x, PY[y].y + DX[x].y))) return;
+    mapField.walls[p.y][p.x] = !mapField.walls[p.y][p.x];
+    mapField.buildEdges();
+    mapField.draw(mapFrame);
+  });
 });

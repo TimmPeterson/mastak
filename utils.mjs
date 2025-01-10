@@ -33,15 +33,15 @@ const map = [
   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 ];
 
-export function genCommonField(numPlayers) {
+export function genCommonField(numPlayers, m) {
   return new field(
-    map,
+    m, //m == undefined ? map : m,
     1024,
     [
-      { x: 14, y: 12 },
-      { x: 14, y: 3 },
-      { x: 5, y: 13 },
-      { x: 14, y: 12 },
+      { x: 2, y: 2 },
+      { x: 2, y: 14 },
+      { x: 14, y: 2 },
+      { x: 14, y: 14 },
     ].slice(0, Math.min(numPlayers, 4))
   );
 }

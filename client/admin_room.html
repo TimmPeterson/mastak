@@ -7,16 +7,24 @@
     <link rel="stylesheet" href="style/admin_room.css" />
   </head>
   <body>
-    <div class="backdiv">
-      <p id="hRoomName"></p>
-      <div class="container">
-        <div id="membersList" class="members-list"></div>
+    <div class="globaldiv">
+      <div class="backdiv">
+        <p id="hRoomName"></p>
+        <div class="container">
+          <div id="membersList" class="members-list"></div>
+        </div>
+
+        <button id="startButton" class="button start">Start</button>
+        <button id="closeButton" class="button close">Close</button>
+        <button id="refreshButton" class="button refresh">Refresh</button>
       </div>
 
-      <button id="startButton" class="button start">Start</button>
-      <button id="closeButton" class="button close">Close</button>
-      <button id="refreshButton" class="button refresh">Refresh</button>
+      <div class="canvasdiv">
+        <!-- <p>Create your map</p> -->
+        <canvas id="mapCanvas" width="1109px" height="1109px"></canvas>
+      </div>
     </div>
+
     <!--
     <div class="container">
       <div id="participants" class="participants"></div>

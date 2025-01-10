@@ -1,5 +1,5 @@
 import { frame } from "./draw.js";
-import { field } from "./field.js";
+import { eqto, point, field } from "./field.js";
 import { ws } from "./ws.js";
 
 function addMember(name) {
@@ -106,9 +106,15 @@ socket.onmessage(async (msg) => {
   if (msg.type == "ansPlayerNo") {
     playerNo = msg.playerNo;
     gameField = field.fromJSON(msg.gameField);
-    gameField.draw(gameFrame);
+    gameField.draw(gameFrame, playerNo);
 
+    if (gameField.loosers.includes(playerNo)) {
+      header.style.color = "red";
+      header.innerText = "You have lost";
+      return;
+    }
     if (playerNo == gameField.turn) {
+      header.style.color = "#4caf50";
       header.innerText = "Your turn";
       await gameField.go(gameFrame, socket);
       socket.send("turnDone", {
@@ -117,16 +123,35 @@ socket.onmessage(async (msg) => {
         gameField: gameField,
         playerNo: playerNo,
       });
-      //header.innerText = "Wait for your turn";
     }
+    header.style.color = "gray";
+    header.innerText = "Wait for your turn";
   }
 
   if (msg.type == "turnDone") {
     if (msg.roomName == sessionStorage.getItem("roomName")) {
       gameField = field.fromJSON(msg.gameField);
-      gameField.draw(gameFrame);
+      gameField.draw(gameFrame, playerNo);
 
+      // let p = gameField.positions[playerNo];
+      // gameField.edges.forEach((edge) => {
+      //   if (eqto(p, edge.p1) || eqto(p, edge.p2)) {
+      //     gameField.turn++;
+      //     socket.send("turnDone", {
+      //       userName: sessionStorage.getItem("userName"),
+      //       roomName: sessionStorage.getItem("roomName"),
+      //       gameField: gameField,
+      //       playerNo: playerNo,
+      //     });
+      //   }
+      // });
+      if (gameField.loosers.includes(playerNo)) {
+        header.style.color = "red";
+        header.innerText = "You have lost";
+        return;
+      }
       if (playerNo == gameField.turn) {
+        header.style.color = "#4caf50";
         header.innerText = "Your turn";
         await gameField.go(gameFrame, socket);
         socket.send("turnDone", {
@@ -135,14 +160,16 @@ socket.onmessage(async (msg) => {
           gameField: gameField,
           playerNo: playerNo,
         });
-        //header.innerText = "Wait for your turn";
       }
+      header.style.color = "gray";
+      header.innerText = "Wait for your turn";
     }
   }
 
   if (msg.type == "gameEnded") {
     if (msg.roomName == sessionStorage.getItem("roomName")) {
-      alert(`${msg.userName} has won the game!`);
+      if (sessionStorage.getItem("userName") != msg.userName)
+        alert(`The game is finished!`);
       if (sessionStorage.getItem("isadmin") === "true")
         window.location.href = "admin_room.html";
       else window.location.href = "member_room.html";

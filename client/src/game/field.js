@@ -5,7 +5,7 @@ class _point {
   }
 }
 
-function eqto(p1, p2) {
+export function eqto(p1, p2) {
   if (p1.x == p2.x && p1.y == p2.y) return true;
   return false;
 }
@@ -17,7 +17,7 @@ class _edge {
   }
 }
 
-const point = (x, y) => new _point(x, y);
+export const point = (x, y) => new _point(x, y);
 const edge = (p1, p2) => new _edge(p1, p2);
 
 export class field {
@@ -54,9 +54,10 @@ export class field {
   }
 
   buildEdges() {
+    this.edges = [];
     for (let y = 0; y < this.width; y++)
       for (let x = 0; x < this.width; x++)
-        if (this.walls[y][x]) {
+        if (this.walls[y][x] == 1) {
           this.edges.push(edge(point(x, y), point(x + 1, y)));
           this.edges.push(edge(point(x, y), point(x, y + 1)));
           this.edges.push(edge(point(x + 1, y + 1), point(x + 1, y)));
@@ -81,6 +82,11 @@ export class field {
       r = 128;
       g = 128;
       b = 128;
+    }
+    if (type == 2) {
+      r = 220;
+      g = 220;
+      b = 220;
     }
     frame.putRect(
       this.gapsize + x * (this.boxsize + this.gapsize),
@@ -114,7 +120,7 @@ export class field {
     );
   }
 
-  draw(frame) {
+  draw(frame, playerNo) {
     //frame.putRect(0, 0, frame.width, frame.width, 0, 255, 0);
 
     for (let x = 0; x < this.width; x++) {
@@ -150,24 +156,38 @@ export class field {
       let p = this.positions[i];
       if (i == this.turn) {
         frame.putRect(
-          this.gapsize / 2 + p.x * (this.boxsize + this.gapsize) - 15,
-          this.gapsize / 2 + p.y * (this.boxsize + this.gapsize) - 15,
-          31,
-          31,
+          this.gapsize / 2 + p.x * (this.boxsize + this.gapsize) - 18,
+          this.gapsize / 2 + p.y * (this.boxsize + this.gapsize) - 18,
+          37,
+          37,
           0,
           128,
           255
         );
       }
+      let r, g, b;
+      if (this.loosers.includes(Number(i))) (r = 255), (g = 0), (b = 0);
+      else (r = 0), (g = 0), (b = 0);
       frame.putRect(
-        this.gapsize / 2 + p.x * (this.boxsize + this.gapsize) - 8,
-        this.gapsize / 2 + p.y * (this.boxsize + this.gapsize) - 8,
-        17,
-        17,
-        0,
-        0,
-        0
+        this.gapsize / 2 + p.x * (this.boxsize + this.gapsize) - 10,
+        this.gapsize / 2 + p.y * (this.boxsize + this.gapsize) - 10,
+        21,
+        21,
+        r,
+        g,
+        b
       );
+      if (i == playerNo) {
+        frame.putRect(
+          this.gapsize / 2 + p.x * (this.boxsize + this.gapsize) - 4,
+          this.gapsize / 2 + p.y * (this.boxsize + this.gapsize) - 4,
+          9,
+          9,
+          255,
+          200,
+          0
+        );
+      }
     }
   }
 
@@ -240,7 +260,7 @@ export class field {
     return true;
   }
 
-  async go(frame, socket) {
+  async go(frame, socket, playerNo) {
     let flag;
     let x0 = this.positions[this.turn].x;
     let y0 = this.positions[this.turn].y;
@@ -252,8 +272,8 @@ export class field {
       if (this.cango(x0, y0, p.x, p.y)) {
         for (let i in this.positions) {
           if (eqto(this.positions[i], p)) {
-            this.loosers.push(i);
-            alert(`You have eaten player #${i}`);
+            if (!this.loosers.includes(i)) this.loosers.push(Number(i));
+            //alert(`You have eaten player #${i}`);
             if (this.loosers.length == this.positions.length - 1) {
               socket.send("gameEnded", {
                 userName: sessionStorage.getItem("userName"),
@@ -278,12 +298,12 @@ export class field {
         flag = 1;
         alert("You can't go there");
       }
-      this.draw(frame);
+      this.draw(frame, playerNo);
     } while (flag == 1);
     console.log("turn is done");
     this.turn = (this.turn + 1) % this.positions.length;
     while (this.loosers.includes(this.turn))
       this.turn = (this.turn + 1) % this.positions.length;
-    this.draw(frame);
+    this.draw(frame, playerNo);
   }
 }
